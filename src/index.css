@@ -1,0 +1,47 @@
+* {
+  margin: auto;
+  padding: 0px;
+  box-sizing: border-box;
+  background-color: #1c1a1a;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  /* max-width: 38rem; */
+}
+
+.logo{
+  display: flex;
+  flex: 2;
+  align-items: center;
+  flex-direction: column;
+}
+
+.buttons {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  flex-direction: column;
+}
+
+.progressbarbutton,
+.progressbarbutton:hover{
+  background-color: #1c1a1a;
+
+}
+
+.main-container{
+
+}
+
+.percent-text{
+  display: flex;
+  flex: 1;
+  align-items: center;
+  flex-direction: column;
+  color: #29d;
+  padding: 50px;
+}
+
+.progress-container{
+}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <link rel="stylesheet" href="index.css">
+    <script defer src="./renderer.js"></script>
+    <script src='./nprogress.js'></script>
+    <link rel='stylesheet' href='nprogress.css'/>
+    <script src="./pace.js"></script>
+    <link rel="stylesheet" href="pace-theme-flat-top.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script> -->
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="logo">
+        <img src="../UOLogo.png" alt="logo">
+      </div>
+      <div class="buttons">
+        <button id="start-button" type="button" class="btn btn-primary">Install</button>
+      </div>
+    </div>
+    <div id="progress-containers">
+      <p id="percentage" class="percent-text"></p>
+      <p id="download-info" class="download-info"></p>
+    </div>
+  </body>
+</html>
