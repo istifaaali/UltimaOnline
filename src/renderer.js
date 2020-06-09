@@ -9,13 +9,15 @@ var percentage;
 var state = "start";
 var github1,github2;
 var data,data2;
+let ultima_dir;
+const testbutton = document.getElementById("bruh");
 
 let settingdata = {
     "username":  "",
     "password":  "",
     "ip":  "login.cataclysmuo.com",
     "port":  2593,
-    "ultimaonlinedirectory":  "",
+    "ultimaonlinedirectory":  `${ultima_dir}`,
     "clientversion":  "5.0.8.3",
     "lastcharactername":  "",
     "cliloc":  "Cliloc.enu",
@@ -70,7 +72,7 @@ async function start(){
                         data2 = 0;
                         percent = 0;
                     }
-                    percentage_text.innerText = `0%`
+                    percentage_text.innerText = `0% 3/3`
 
                     fs.mkdir("./extracted-files/", function(){
                         console.log("Created New Folder");
@@ -78,24 +80,29 @@ async function start(){
 
                     decompress('./downloads/ClassicUO-dev-preview-release.zip', './extracted-files/').then(function(){
                         NProgress.set(0.50);
-                        percentage_text.innerText = `50%`
+                        percentage_text.innerText = `50% 3/3`
                         console.log('done extracting first file!');
+                        downloadinfo.innerText = "Extracting ClassicUO zip file...";
                     }).then(function(){
                         fs.mkdir("./extracted-files/Razor", function(){
                             console.log("Create Razor Plugin Folder");
                         });
                         decompress('./downloads/Razor-dev-preview.zip', './extracted-files/Razor').then(function(){
                             NProgress.done();
-                            percentage_text.innerText = `100%`
+                            percentage_text.innerText = `100% 3/3`
                             console.log('done extracting second zip-file!');
+                            downloadinfo.innerText = "Extracting Razor Plugin zip file...";
                         }).then(function(){
                             if(!fs.existsSync("./extracted-files/settings.json")){
                                 console.log("Settings.json does not exist, generating....");
+                                downloadinfo.innerText = "Settings.json does not exist, generating...";
                                 let received_setting_data = JSON.stringify(settingdata);
                                 fs.writeFileSync('./extracted-files/settings.json', received_setting_data);
                                 console.log("Generated JSON file!");
+                                downloadinfo.innerText = "Generated JSON file!";
                             }else if(fs.existsSync("./extracted-files/settings.json")){
                                 console.log("Settings.json already exists!");
+                                downloadinfo.innerText = "Settings.json already exists!";
                                 //const settingsfile = require("./extracted-files/settings.json");
                             }  
 
@@ -116,15 +123,17 @@ async function start(){
         github1.on("progress", function(){
             data += 1;
             var percent = (data/1933) * 100
-            percentage_text.innerText = `${Math.round(percent)}%`
+            percentage_text.innerText = `${Math.round(percent)}% 1/3`
             NProgress.set(percent/100);
+            downloadinfo.innerText = "Downloading ClassicUO zipfile..."
         })
 
         github2.on("progress", function(){
             data2 += 1;
             var percent = (data2/287) * 100
-            percentage_text.innerText = `${Math.round(percent)}%`
+            percentage_text.innerText = `${Math.round(percent)}% 2/3`
             NProgress.set(percent/100);
+            downloadinfo.innerText = "Downloading Razor Plugin zipfile..."
         })
 
 
@@ -139,11 +148,12 @@ async function start(){
 
 
         percentage = 0;
-        percentage_text.innerText = "0%"
+        percentage_text.innerText = ""
         startbutton.classList.remove('btn-danger');
         startbutton.classList.add('btn-primary');
         startbutton.innerText = "Install";
         state = "start"
+        downloadinfo.innerText = "";
     }
 
 
@@ -151,4 +161,12 @@ async function start(){
     //NProgress.configure({ parent: prograsscontainer });
  }
 
+ function discord(){
+    require("electron").shell.openExternal("https://discord.gg/uretDWA");
+
+ }
+
+
 startbutton.onclick = start;
+testbutton.onclick = discord;
+
