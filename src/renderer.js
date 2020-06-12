@@ -10,7 +10,7 @@ var state = "start";
 var github1,github2;
 var data,data2;
 let ultima_dir;
-const abouthtml = require("./about.js");
+//const abouthtml = require("./about.js");
 //const progress_container = document.getElementById("progress-containers");
 
 let settingdata = {
