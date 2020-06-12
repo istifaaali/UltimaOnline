@@ -10,34 +10,35 @@ var state = "start";
 var github1,github2;
 var data,data2;
 let ultima_dir;
-const testbutton = document.getElementById("bruh");
+const abouthtml = require("./about.js");
+//const progress_container = document.getElementById("progress-containers");
 
 let settingdata = {
-    "username":  "",
-    "password":  "",
-    "ip":  "login.cataclysmuo.com",
-    "port":  2593,
-    "ultimaonlinedirectory":  `${ultima_dir}`,
-    "clientversion":  "5.0.8.3",
-    "lastcharactername":  "",
-    "cliloc":  "Cliloc.enu",
-    "lastservernum":  1,
-    "fps":  60,
-    "window_position":  null,
-    "window_size":  null,
-    "is_win_maximized":  true,
-    "profiler":  true,
-    "saveaccount":  false,
-    "autologin":  false,
-    "reconnect":  false,
-    "reconnect_time":  0,
-    "login_music":  true,
-    "login_music_volume":  70,
-    "shard_type":  0,
-    "fixed_time_step":  true,
-    "run_mouse_in_separate_thread":  true,
-    "use_verdata":  false,
-    "encryption":  0,
+    "username": "",
+    "password": "",
+    "ip": "login.cataclysmuo.com",
+    "port": 2593,
+    "ultimaonlinedirectory": `${ultima_dir}`,
+    "clientversion": "5.0.8.3",
+    "lastcharactername": "",
+    "cliloc": "Cliloc.enu",
+    "lastservernum": 1,
+    "fps": 60,
+    "window_position": null,
+    "window_size": null,
+    "is_win_maximized": true,
+    "profiler": true,
+    "saveaccount": false,
+    "autologin": false,
+    "reconnect": false,
+    "reconnect_time": 0,
+    "login_music": true,
+    "login_music_volume": 70,
+    "shard_type": 0,
+    "fixed_time_step": true,
+    "run_mouse_in_separate_thread": true,
+    "use_verdata": false,
+    "encryption": 0,
     "plugins": ["./extracted-files/Razor/Razor.exe"]
 }
 
@@ -161,12 +162,9 @@ async function start(){
     //NProgress.configure({ parent: prograsscontainer });
  }
 
- function discord(){
-    require("electron").shell.openExternal("https://discord.gg/uretDWA");
 
- }
 
 
 startbutton.onclick = start;
-testbutton.onclick = discord;
+
 

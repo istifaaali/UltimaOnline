@@ -34,6 +34,10 @@ body {
 
 }
 
+#progress-containers{
+  /* padding-bottom: 50px; */
+}
+
 .percent-text{
   display: flex;
   flex: 1;
@@ -52,7 +56,17 @@ body {
   font-style: italic;
 }
 
-.links{
-  padding-top: 50px;
+/* .links{
   padding-left: 10px;
+  
+} */
+
+/* #discord-button,
+#website-button{
+  border: none;
+  background: none;
+  border-radius: 10px;
 }
+#website-button{
+  padding-left: 5px;
+} */

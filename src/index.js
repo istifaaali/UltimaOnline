@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Menu } = require('electron');
 const path = require('path');
 
 if (require('electron-squirrel-startup')) { 
@@ -23,7 +23,12 @@ const createWindow = () => {
 };
 
 
-app.on('ready', createWindow);
+app.on('ready', function(){
+  createWindow();
+
+  const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
+  Menu.setApplicationMenu(mainMenu);
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -36,6 +41,40 @@ app.on('activate', () => {
     createWindow();
   }
 });
+
+function newWindow(){
+  const aboutWindow = new BrowserWindow({
+    width: 600,
+    height: 500,
+    resizable: false,
+    webPreferences:{
+      nodeIntegration:true,
+    }
+  });
+
+  aboutWindow.loadFile(path.join(__dirname, 'about.html'));
+  aboutWindow.webContents.openDevTools();
+}
+
+const mainMenuTemplate = [
+  {
+    label:"About",
+    click(){
+      newWindow();
+    }   
+  },
+  {
+    label:"File",
+    submenu:[
+      {
+        label: "Exit",  
+        click(){
+          app.quit();
+        }
+      }
+    ]
+  }
+]
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
