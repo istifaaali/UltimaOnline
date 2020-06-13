@@ -6,8 +6,8 @@ text = `
 This script will install the latest developer versions of ClassicUO and Razor.<br>
 It can be ran to install for the first time, or to ensure your current versions of ClassicUO and Razor are on the latest developer preview builds.<br><br>
 ${"NOTE:".bold()} This script will perform the following steps, so please review first:<br><br>
-1) Download the latest ClassicUO dev preview build to: ${__dirname}\\downloads<br><br>
-2) Download the latest Razor dev preview to:  ${__dirname}\\extracted-files<br><br>
+1) Download the latest ClassicUO,Razor dev build to: ${__dirname}\\downloads<br><br>
+2) Extract both zip-files to:  ${__dirname}\\extracted-files<br><br>
 3) Help with setting up the initial settings.json file if it doesn't exist`;
 
 

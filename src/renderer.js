@@ -9,38 +9,34 @@ var percentage;
 var state = "start";
 var github1,github2;
 var data,data2;
-let ultima_dir;
+let ultima_dir = "";
+localStorage.setItem("ultimaDir", ultima_dir);
+let inputWindow;
+//const dirfile = require("./dir_input.js");
+
 //const abouthtml = require("./about.js");
 //const progress_container = document.getElementById("progress-containers");
 
-let settingdata = {
-    "username": "",
-    "password": "",
-    "ip": "login.cataclysmuo.com",
-    "port": 2593,
-    "ultimaonlinedirectory": `${ultima_dir}`,
-    "clientversion": "5.0.8.3",
-    "lastcharactername": "",
-    "cliloc": "Cliloc.enu",
-    "lastservernum": 1,
-    "fps": 60,
-    "window_position": null,
-    "window_size": null,
-    "is_win_maximized": true,
-    "profiler": true,
-    "saveaccount": false,
-    "autologin": false,
-    "reconnect": false,
-    "reconnect_time": 0,
-    "login_music": true,
-    "login_music_volume": 70,
-    "shard_type": 0,
-    "fixed_time_step": true,
-    "run_mouse_in_separate_thread": true,
-    "use_verdata": false,
-    "encryption": 0,
-    "plugins": ["./extracted-files/Razor/Razor.exe"]
+
+
+const electron = require('electron');
+const BrowserWindow = electron.remote.BrowserWindow;
+const path = require('path');
+
+function newWindow(){
+    inputWindow = new BrowserWindow({
+      width: 400,
+      height: 200,
+      resizable: false,
+      webPreferences:{
+        nodeIntegration:true,
+      }
+    });
+    inputWindow.removeMenu();
+    inputWindow.loadFile(path.join(__dirname, 'dir_input.html'));
+    inputWindow.webContents.openDevTools();
 }
+
 
 
 async function start(){
@@ -68,18 +64,20 @@ async function start(){
                     if(data != 0){
                         data = 0;
                         percent = 0;
+                        NProgress.done();
                     }
                     if(data2 != 0){
                         data2 = 0;
                         percent = 0;
+                        NProgress.done();
                     }
                     percentage_text.innerText = `0% 3/3`
-
                     fs.mkdir("./extracted-files/", function(){
                         console.log("Created New Folder");
                     });
 
                     decompress('./downloads/ClassicUO-dev-preview-release.zip', './extracted-files/').then(function(){
+                        NProgress.set(0.0);
                         NProgress.set(0.50);
                         percentage_text.innerText = `50% 3/3`
                         console.log('done extracting first file!');
@@ -97,25 +95,99 @@ async function start(){
                             if(!fs.existsSync("./extracted-files/settings.json")){
                                 console.log("Settings.json does not exist, generating....");
                                 downloadinfo.innerText = "Settings.json does not exist, generating...";
-                                let received_setting_data = JSON.stringify(settingdata);
-                                fs.writeFileSync('./extracted-files/settings.json', received_setting_data);
-                                console.log("Generated JSON file!");
-                                downloadinfo.innerText = "Generated JSON file!";
+                                console.log("Asking user for input");
+
+                                newWindow();
+                                function loop(){
+                                    varfile = require("./var.json");
+                                    if(ultima_dir === "" ||  ultima_dir === undefined){
+                                        ultima_dir = localStorage.getItem("ultimaDir");  
+
+                                        console.log("DIRECTORY IS EMPTY");
+                                        setTimeout(loop, 1000)
+                                        console.log(ultima_dir)
+                                    }else{
+                                        let settings = {
+                                            "username": "",
+                                            "password": "",
+                                            "ip": "login.cataclysmuo.com",
+                                            "port": 2593,
+                                            "ultimaonlinedirectory": `${ultima_dir}`,
+                                            "clientversion": "5.0.8.3",
+                                            "lastcharactername": "",
+                                            "cliloc": "Cliloc.enu",
+                                            "lastservernum": 1,
+                                            "fps": 60,
+                                            "window_position": null,
+                                            "window_size": null,
+                                            "is_win_maximized": true,
+                                            "profiler": true,
+                                            "saveaccount": false,
+                                            "autologin": false,
+                                            "reconnect": false,
+                                            "reconnect_time": 0,
+                                            "login_music": true,
+                                            "login_music_volume": 70,
+                                            "shard_type": 0,
+                                            "fixed_time_step": true,
+                                            "run_mouse_in_separate_thread": true,
+                                            "use_verdata": false,
+                                            "encryption": 0,
+                                            "plugins": ["./extracted-files/Razor/Razor.exe"]
+                                        }
+                                        let received_setting_data = JSON.stringify(settings);
+                                        fs.writeFileSync('./extracted-files/settings.json', received_setting_data)
+                                        console.log("Generated JSON file!");
+                                        downloadinfo.innerText = "Generated JSON file!";
+                                        settingfile = true;
+
+                                        startbutton.classList.remove('btn-danger');
+                                        startbutton.classList.add('btn-primary');
+                                        startbutton.innerText = "Install";
+                                        percentage_text.innerText = ``
+                                        state = "start"
+                                        data = 0;
+                                        data2 = 0;
+                                        percent = 0;
+                                        inputWindow.close();
+
+
+                                        function checker(){
+                                            if(settingfile){
+                                                var exec = require('child_process').execFile;
+                                                exec('./extracted-files/ClassicUO.exe', function(err, data) {  
+                                                    console.log(err)
+                                                    console.log("Opening ClassicUO.exe");                    
+                                                });   
+                                                settingfile = false;
+                                            }else if(!settingfile){
+                                                console.log("NO input given");
+                                            }
+                                        }
+
+                                        setTimeout(checker,1000);
+
+                                        
+                                    }
+                                }
+
+                                loop();
+
                             }else if(fs.existsSync("./extracted-files/settings.json")){
                                 console.log("Settings.json already exists!");
                                 downloadinfo.innerText = "Settings.json already exists!";
                                 //const settingsfile = require("./extracted-files/settings.json");
                             }  
 
-                            startbutton.classList.remove('btn-danger');
-                            startbutton.classList.add('btn-primary');
-                            startbutton.innerText = "Install";
-                            percentage_text.innerText = ``
-                            state = "start"
-                            data = 0;
-                            data2 = 0;
-                            percent = 0;
-                        });
+                            // startbutton.classList.remove('btn-danger');
+                            // startbutton.classList.add('btn-primary');
+                            // startbutton.innerText = "Install";
+                            // percentage_text.innerText = ``
+                            // state = "start"
+                            // data = 0;
+                            // data2 = 0;
+                            // percent = 0;
+                        })
                     })
                 }
             });
@@ -164,7 +236,9 @@ async function start(){
 
 
 
-
-startbutton.onclick = start;
-
+try{
+    startbutton.onclick = start;
+}catch{
+    console.log();
+}
 
