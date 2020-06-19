@@ -34,7 +34,7 @@ function newWindow(){
     });
     inputWindow.removeMenu();
     inputWindow.loadFile(path.join(__dirname, 'dir_input.html'));
-    inputWindow.webContents.openDevTools();
+    // inputWindow.webContents.openDevTools();
 }
 
 

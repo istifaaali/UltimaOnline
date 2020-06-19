@@ -5,7 +5,7 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
-//process.env.NODE_ENV = "production";
+process.env.NODE_ENV = "production";
 
 const createWindow = () => {
   // Create the browser window.
@@ -19,7 +19,7 @@ const createWindow = () => {
   });
 
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 };
 
 
@@ -53,7 +53,7 @@ function newWindow(){
   });
 
   aboutWindow.loadFile(path.join(__dirname, 'about.html'));
-  aboutWindow.webContents.openDevTools();
+  // aboutWindow.webContents.openDevTools();
 }
 
 const mainMenuTemplate = [
